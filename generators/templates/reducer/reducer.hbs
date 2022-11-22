@@ -1,0 +1,21 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { {{ properCase reducerName }}State } from '@/types';
+
+const initialState: {{ properCase reducerName }}State = {
+};
+
+export const {{ camelCase reducerName }}Reducer = createSlice({
+  name: '{{ camelCase reducerName }}',
+  initialState,
+  reducers: {
+    update{{ properCase reducerName }}State: (state, action: PayloadAction<Partial<{{ properCase reducerName }}State>>) => ({
+      ...state,
+      ...action.payload,
+    }),
+  },
+});
+
+export const { update{{ properCase reducerName }}State } = {{ camelCase reducerName }}Reducer.actions;
+
+export default {{ camelCase reducerName }}Reducer.reducer;

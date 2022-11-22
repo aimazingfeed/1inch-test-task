@@ -1,0 +1,23 @@
+@mixin forMobile {
+  @media screen and (max-width: 829.5px) { // if decimals = .99px - there are no changes in Chrome 
+    @content;
+  }
+}
+
+@mixin forTablet {
+  @media screen and (max-width: 1439.5px) { // Also
+    @content;
+  }
+}
+
+@mixin forDesktopSm {
+  @media screen and (max-width: 1919.99px) {
+    @content;
+  }
+}
+
+@mixin b($value) {
+  @media screen and (max-width: ($value + px)) {
+    @content;
+  }
+}

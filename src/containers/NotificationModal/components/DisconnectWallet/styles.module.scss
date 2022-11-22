@@ -1,0 +1,20 @@
+@import '/src/styles/index';
+
+$colorDarkJungleGreen : #121432;
+$colorSpaceCadet: #282A52;
+
+$border-modal-disconnect: 1px solid $colorSpaceCadet;
+
+.disconnectWallet { 
+  padding: 32px 42px 36px;
+  background-color: $colorDarkJungleGreen;
+  border: $border-modal-disconnect;
+  border-radius: 20px;
+  @include flex(column, center, center, nowrap);
+  box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
+}
+
+.modalText {
+  margin-bottom: 32px;
+  max-width: 188px;
+}

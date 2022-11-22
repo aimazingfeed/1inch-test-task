@@ -1,0 +1,35 @@
+@import '/src/styles/index';
+
+:global(.modal-mask) {
+  z-index: 100;
+  overflow: hidden;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  height: 100%;
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-color: $bgModalMask;
+}
+
+:global(.modal-wrap) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  @include flex(row, center, center);
+  width: 100%;
+  overflow: auto;
+  outline: 0;
+}
+.modal_wrapper {
+  position: relative;
+  border-radius: 16px;
+  // background: $bgMain;
+  box-shadow: $shadowModal;
+}

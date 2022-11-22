@@ -1,0 +1,15 @@
+import { render } from '@testing-library/react';
+
+import { {{ properCase name }} } from './{{ properCase name }}';
+import { {{ camelCase name }}PropsMocked } from './{{ properCase name }}.mock';
+
+describe('{{ properCase name }}', () => {
+  it('should render', () => {
+    const { container } = render(
+      <{{ properCase name }}
+        {...{{ camelCase name }}PropsMocked}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+});

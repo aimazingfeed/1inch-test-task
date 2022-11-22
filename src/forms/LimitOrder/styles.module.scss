@@ -1,0 +1,77 @@
+@import 'src/styles/index';
+
+$border-radius: 12px;
+
+$color-button-active-tab: green;
+$color-error-message: #f55353;
+$color-submit-button-border-hover: #7c8274;
+$color-submit-button-border-active: #7eafee;
+
+$border-transition: all .3s ease-in-out;
+$button-submit-background: transparent;
+$button-submit-background-hover: $color-submit-button-border-hover;
+$button-submit-background-active: $color-submit-button-border-active;
+
+$input-border: 2px solid transparent;
+$input-border-hover: 2px solid #7eafee;
+$input-border-focus: 2px solid #3083ef;
+.innerForm {
+  @include flex(column, center, center);
+}
+.tabsSwitcherContainer {
+  margin: 0 auto;
+  width: fit-content;
+  margin-bottom: 40px;
+}
+.tabSwitcher {
+  text-decoration: underline;
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+  &.active {
+    color: $color-button-active-tab;
+  }
+}
+.formInput {
+  transition: $border-transition;
+  width: 300px;
+  border-radius: $border-radius;
+  border: 0px;
+  line-height: 30px;
+  padding: 4px 8px;
+  border: $input-border;
+  &:hover {
+    border: $input-border-hover;
+  }
+  &:focus {
+    border: $input-border-focus;
+  }
+}
+.inputWrapper {
+  margin-bottom: 30px;
+  position: relative;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.errorInfo {
+  color: $color-error-message;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, 100%);
+}
+.submitButton {
+  transition: $border-transition;
+  border-radius: $border-radius;
+  padding: 4px 8px;
+  &:hover {
+    background-color: $button-submit-background-hover;
+  }
+  &:active {
+    background-color: $button-submit-background-active;
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+}

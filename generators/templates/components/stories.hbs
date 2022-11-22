@@ -1,0 +1,16 @@
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import { {{ properCase name }} } from './{{ properCase name}}';
+import { {{ camelCase name }}PropsMocked } from './{{ properCase name }}.mock';
+
+export default {
+  title: 'components/{{ properCase name }}',
+  component: {{ properCase name }},
+} as ComponentMeta<typeof {{ properCase name }}>;
+
+const Template: ComponentStory<typeof {{ properCase name }}> = (args) => (
+  <{{ properCase name }} {...args} />
+);
+export const Default = Template.bind({});
+
+Default.args = {{camelCase name}}PropsMocked;

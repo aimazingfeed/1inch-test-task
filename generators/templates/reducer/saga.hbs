@@ -1,0 +1,23 @@
+import { put, takeLatest } from 'typed-redux-saga';
+import apiActions from '@/store/api/actions';
+
+import { helloWorld } from '../actions';
+import actionTypes from '../actionTypes';
+
+export function* exampleSaga({ type, payload }: ReturnType<typeof helloWorld>) {
+  yield* put(apiActions.request(type));
+
+  try {
+    // do logic here
+    console.log(payload);
+
+    yield* put(apiActions.success(type));
+  } catch (err) {
+    console.log(err);
+    yield* put(apiActions.error(type, err));
+  }
+}
+
+export default function* listener() {
+  yield takeLatest(actionTypes.HELLO_WORLD, exampleSaga);
+}

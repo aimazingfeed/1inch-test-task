@@ -1,0 +1,42 @@
+@import '/src/styles/index';
+
+$colorRichBlack: #070B24;
+$colorSpaceCadet: #282A52;
+$colorOnyx: #353945;
+$colorDarkJungleGreen : #121432;
+$colorWhite: #FCFCFD;
+
+$border-modal: 1px solid $colorSpaceCadet;
+
+.connectWallet { 
+  background-color: $colorDarkJungleGreen;
+  border: $border-modal;
+  padding: 32px 26px 23px;
+  border-radius: 20px;
+  box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
+}
+.modalHeader {
+  @include flex(row, space-between, center, nowrap);
+  margin-bottom: 32px;
+}
+.bodyText {
+  max-width: 235px;
+  margin: 0 auto 32px;
+}
+.closeButton {
+  margin-left: 50px;
+  color: $colorWhite;
+}
+.buttonsContainer {
+  @include flex(column);
+}
+.connectButton {
+  width: 310px;
+  height: 72px;
+  border-radius: 16px;
+  background-color: $colorRichBlack;
+  @include flex(unset, center, center, nowrap);
+}
+.metamaskButton {
+  margin-bottom: 9px;
+}

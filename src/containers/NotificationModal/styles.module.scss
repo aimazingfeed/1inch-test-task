@@ -1,0 +1,10 @@
+@import '/src/styles/index';
+
+.root {
+}
+
+.connect {
+  width: 100%;
+  min-height: 350px;
+  @include flex(row, center, center, nowrap);
+}

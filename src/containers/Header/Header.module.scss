@@ -1,0 +1,12 @@
+@import '/src/styles/index';
+$border-radius: 12px;
+$color-button-connect: #ffe600;
+
+.header {
+  
+}
+.connectButton {
+  border-radius: $border-radius;
+  background-color: $color-button-connect;
+  padding: 4px 8px;
+}

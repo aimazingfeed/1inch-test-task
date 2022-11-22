@@ -1,0 +1,6 @@
+import type { State, {{ properCase reducerName }}State } from '@/types';
+
+export default {
+  get{{ properCase reducerName }}: (state: State): {{ properCase reducerName }}State => state.{{ camelCase reducerName }},
+  getProp: <T extends keyof {{ properCase reducerName }}State>(propKey: T) => (state: State) => state.{{ camelCase reducerName }}[propKey],
+};

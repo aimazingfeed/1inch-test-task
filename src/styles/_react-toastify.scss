@@ -1,0 +1,62 @@
+.Toastify__toast {
+  background: red;
+  color: $darkBlue;
+  border-radius: $borderRadius;
+  min-height: 70px;
+  border: 1px solid;
+  transition: 0.4s ease;
+
+  svg {
+    width: 25px;
+  }
+
+  &-body {
+    padding: 0;
+  }
+  &-icon {
+    width: fit-content;
+  }
+
+  &--success {
+    border-color: $green;
+    background: linear-gradient(0deg, rgba(96, 201, 200, 0.1), rgba(96, 201, 200, 0.1)), #ffffff;
+    &:hover {
+      background: $green;
+    }
+  }
+  &--info {
+    border-color: $purple;
+    background: linear-gradient(0deg, rgba(187, 131, 237, 0.1), rgba(187, 131, 237, 0.1)), #ffffff;
+    &:hover {
+      background: $purple;
+    }
+  }
+  &--warning {
+    border-color: $peach;
+    background: linear-gradient(0deg, rgba(250, 226, 198, 0.2), rgba(250, 226, 198, 0.2)), #ffffff;
+    &:hover {
+      background: $peach;
+    }
+  }
+  &--error {
+    border-color: $peachSecondary;
+    background: linear-gradient(0deg, rgba(241, 172, 167, 0.1), rgba(241, 172, 167, 0.1)), #ffffff;
+    &:hover {
+      background: $peachSecondary;
+    }
+  }
+  &--default {
+    border-color: $purple;
+    background: linear-gradient(0deg, rgba(187, 131, 237, 0.1), rgba(187, 131, 237, 0.1)), #ffffff;
+    .Toastify__toast-icon {
+      margin: 0 10px;
+    }
+    .Toastify__toast-icon svg {
+      height: 25px;
+      width: 25px;
+    }
+    &:hover {
+      background: $purple;
+    }
+  }
+}

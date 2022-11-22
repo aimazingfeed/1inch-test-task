@@ -1,0 +1,7 @@
+import { fork } from 'redux-saga/effects';
+
+import getLockupDataSaga from './getLockupDataSaga';
+
+export default function* {{ camelCase reducerName }}Sagas() {
+  yield fork(getLockupDataSaga);
+}

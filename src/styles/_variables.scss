@@ -1,0 +1,45 @@
+$breakpoints: (
+  xs: 576px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+);
+
+// Mobile first
+$mediaWidthLaptop: 1440px;
+$mediaWidthDesktop: 1024px;
+$mediaWidthTablet: 768px;
+$mediaWidthMobile: 550px;
+
+// Backgrounds
+$bgMain: #ffffff;
+$bgModalMask: rgba(50, 51, 90, 0.5);
+$bgActiveMenuLink: rgba(50, 51, 90, 0.1);
+$bgSlider: #F6F9FB;
+$bgLockup: rgba(187, 131, 237, 0.1);
+
+// constants
+$borderRadius: 10px;
+
+// colors
+$blue: #1969ff;
+$gray: #7E8A9E;
+$lightBlue: #d5e1fd;
+$blueSemi10: rgba(25, 105, 255, 0.1);
+$purple: #bb83ed;
+$green: #4fafad;
+$darkBlue: #32335a;
+$peach: #fae2c6;
+$peachSecondary: #f1aca7;
+$inputGrayBg: #f3f7fa;
+
+// Typography
+$textMain: #32335a;
+$textWhite: #ffffff;
+$textLabel1: #708898;
+$textLabel2: #7e8a9e;
+$textDetails: #163c56;
+$textAccent: #1969ff;
+
+// Utils
+$shadowModal: 0 10px 50px rgba(0, 0, 0, 0.2);
