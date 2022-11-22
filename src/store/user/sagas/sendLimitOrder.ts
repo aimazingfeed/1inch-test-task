@@ -24,17 +24,12 @@ export function* sendLimitOrderSaga({
     const limitOrder = limitOrderBuilder.buildLimitOrder({
       makerAddress: myAddress,
       ...formValues,
-      predicate: '0x0',
-      permit: '0x0',
-      interaction: '0x0',
     });
     const limitOrderTypedData = limitOrderBuilder.buildLimitOrderTypedData(limitOrder);
     const limitOrderSignature = yield limitOrderBuilder.buildOrderSignature(myAddress, limitOrderTypedData);
-    const callData = limitOrderProtocolFacade.fillLimitOrder(limitOrder, limitOrderSignature, '100', '0', '50');
-    web3Provider.eth.sendTransaction({
+    const callData = yield limitOrderProtocolFacade.fillLimitOrder(limitOrder, limitOrderSignature, '100', '0', '50');
+    yield web3Provider.eth.sendTransaction({
       from: myAddress,
-      gas: 210_000, // Set your gas limit
-      gasPrice: 40000, // Set your gas price
       to: contractAddress,
       data: callData,
     });

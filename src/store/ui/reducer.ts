@@ -5,7 +5,8 @@ import { RequestStatus } from 'types/store';
 import { getUIReducer } from '.';
 
 const initialState: UIState = {
-  [userActionTypes.GET_USER_BALANCE]: RequestStatus.INIT,
+  [userActionTypes.SEND_LIMIT_ORDER]: RequestStatus.INIT,
+  [userActionTypes.CANCEL_LIMIT_ORDER]: RequestStatus.INIT,
 };
 
 const uiReducer = getUIReducer(initialState);

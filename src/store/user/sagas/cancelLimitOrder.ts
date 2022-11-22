@@ -24,15 +24,10 @@ export function* cancelLimitOrderSaga({
     const limitOrder = limitOrderBuilder.buildLimitOrder({
       makerAddress: myAddress,
       ...formValues,
-      predicate: '0x0',
-      permit: '0x0',
-      interaction: '0x0',
     });
     const callData = limitOrderProtocolFacade.cancelLimitOrder(limitOrder);
     web3Provider.eth.sendTransaction({
       from: myAddress,
-      gas: 210_000,
-      gasPrice: 40000,
       to: contractAddress,
       data: callData,
     });

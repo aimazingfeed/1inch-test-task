@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { chains, networkDataForAddToMetamask } from 'config';
 import { useShallowSelector } from 'hooks';
 import { Subscription } from 'rxjs';
-import { getUserBalance } from 'store/user/actions';
 import { disconnectWalletState, updateUserState } from 'store/user/reducer';
 import userSelector from 'store/user/selectors';
 import { Chains, State, UserState, WalletProviders } from 'types';
