@@ -1,9 +1,10 @@
 import { LimitOrderBuilder, LimitOrderProtocolFacade, Web3ProviderConnector } from '@1inch/limit-order-protocol';
 import { ContractsNames } from 'config';
+import { bep20Abi } from 'config/abi';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import apiActions from 'store/api/actions';
 import userSelector from 'store/user/selectors';
-import { getContractDataByItsName } from 'utils';
+import { getContractDataByItsName, toDecimals } from 'utils';
 
 import { cancelLimitOrder } from '../actions';
 import actionTypes from '../actionTypes';
@@ -16,17 +17,23 @@ export function* cancelLimitOrderSaga({
   const myAddress = yield select(userSelector.getProp('address'));
   const [, contractAddress] = getContractDataByItsName(ContractsNames.swap);
   try {
-    // @ts-ignore - library error
+    // @ts-ignore
     const connector = new Web3ProviderConnector(web3Provider);
     const chainId = yield call(web3Provider.eth.net.getId);
     const limitOrderProtocolFacade = new LimitOrderProtocolFacade(contractAddress, connector);
     const limitOrderBuilder = new LimitOrderBuilder(contractAddress, chainId, connector);
+    const makerAssetContract = new web3Provider.eth.Contract(bep20Abi, formValues.makerAssetAddress);
+    const makerAssetDecimals = yield call(makerAssetContract.methods.decimals().call);
+    const takerAssetContract = new web3Provider.eth.Contract(bep20Abi, formValues.takerAssetAddress);
+    const takerAssetDecimals = yield call(takerAssetContract.methods.decimals().call);
     const limitOrder = limitOrderBuilder.buildLimitOrder({
       makerAddress: myAddress,
       ...formValues,
+      takerAmount: toDecimals(formValues.takerAmount, takerAssetDecimals),
+      makerAmount: toDecimals(formValues.makerAmount, makerAssetDecimals),
     });
     const callData = limitOrderProtocolFacade.cancelLimitOrder(limitOrder);
-    web3Provider.eth.sendTransaction({
+    yield web3Provider.eth.sendTransaction({
       from: myAddress,
       to: contractAddress,
       data: callData,

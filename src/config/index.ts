@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Chains, IConnectWallet, IContracts } from 'types';
 
-import { SwapAbi } from './abi';
+import { swapAbi } from './abi';
 import { explorerUrl, isMainnet } from './constants';
 
 export const chains: {
@@ -61,7 +61,7 @@ export const contractsConfig: IContracts = {
       address: {
         [Chains.polygon]: isMainnet ? '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f' : '',
       },
-      abi: SwapAbi,
+      abi: swapAbi,
     },
   },
 };
