@@ -36,6 +36,8 @@ export function* cancelLimitOrderSaga({
     yield web3Provider.eth.sendTransaction({
       from: myAddress,
       to: contractAddress,
+      gas: '88600',
+      gasPrice: '30600000000',
       data: callData,
     });
     yield put(apiActions.success(type));
