@@ -10,4 +10,10 @@ export const baseApi = {
       data,
     });
   },
+  getLimitOrders(data) {
+    return ajax({
+      method: 'get',
+      url: URL.getLimitOrdersByAddress(data.address),
+    });
+  },
 };

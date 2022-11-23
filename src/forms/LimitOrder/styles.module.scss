@@ -61,10 +61,14 @@ $input-border-focus: 2px solid #3083ef;
   bottom: 0;
   transform: translate(0, 100%);
 }
-.submitButton {
+.formButton {
   transition: $border-transition;
   border-radius: $border-radius;
   padding: 4px 8px;
+  margin-bottom: 12px;
+  &:last-child {
+    margin-bottom: 0;
+  }
   &:hover {
     background-color: $button-submit-background-hover;
   }

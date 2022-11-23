@@ -4,7 +4,7 @@ import cn from 'clsx';
 import { Formik } from 'formik';
 import { useShallowSelector } from 'hooks';
 import { useWalletConnectorContext } from 'services';
-import { cancelLimitOrder, sendLimitOrder } from 'store/user/actions';
+import { cancelAll, cancelLimitOrder, sendLimitOrder } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 import { State, UserState } from 'types';
 
@@ -37,6 +37,9 @@ export const LimitOrder: FC<LimitOrderProps> = ({ className }) => {
   const handleSubmitForm = (values: LimitOrderModel) => {
     if (isSendTabActive) dispatch(sendLimitOrder({ formValues: values, web3Provider: walletService }));
     else dispatch(cancelLimitOrder({ formValues: values, web3Provider: walletService }));
+  };
+  const handleCancelAll = () => {
+    dispatch(cancelAll({ web3Provider: walletService }));
   };
   return (
     <div className={cn(s.limitOrder, className)}>
@@ -106,9 +109,19 @@ export const LimitOrder: FC<LimitOrderProps> = ({ className }) => {
               {touched.takerAmount && errors.takerAmount && <p className={s.errorInfo}>{String(errors.takerAmount)}</p>}
             </div>
 
-            <button className={s.submitButton} type="submit" disabled={!address}>
+            <button className={s.formButton} type="submit" disabled={!address}>
               {isSendTabActive ? 'Send' : 'Cancel'} limit order
             </button>
+            {!isSendTabActive && (
+              <button
+                className={cn(s.formButton, s.cancelButton)}
+                type="button"
+                onClick={handleCancelAll}
+                disabled={!address}
+              >
+                Cancel all orders
+              </button>
+            )}
           </form>
         )}
       </Formik>

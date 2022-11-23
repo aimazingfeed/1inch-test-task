@@ -1,10 +1,11 @@
-import { LimitOrderBuilder, LimitOrderProtocolFacade, Web3ProviderConnector } from '@1inch/limit-order-protocol';
 import { ContractsNames } from 'config';
 import { bep20Abi } from 'config/abi';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import apiActions from 'store/api/actions';
+import { baseApi } from 'store/api/apiRequestBuilder';
 import userSelector from 'store/user/selectors';
-import { getContractDataByItsName, toDecimals } from 'utils';
+import { SwapAbi } from 'types/contracts';
+import { getContractDataByItsName, toDecimals, validateStatus } from 'utils';
 
 import { cancelLimitOrder } from '../actions';
 import actionTypes from '../actionTypes';
@@ -15,30 +16,34 @@ export function* cancelLimitOrderSaga({
 }: ReturnType<typeof cancelLimitOrder>) {
   yield put(apiActions.request(type));
   const myAddress = yield select(userSelector.getProp('address'));
-  const [, contractAddress] = getContractDataByItsName(ContractsNames.swap);
+  const [contractAbi, contractAddress] = getContractDataByItsName(ContractsNames.swap);
   try {
-    // @ts-ignore
-    const connector = new Web3ProviderConnector(web3Provider);
-    const chainId = yield call(web3Provider.eth.net.getId);
-    const limitOrderProtocolFacade = new LimitOrderProtocolFacade(contractAddress, connector);
-    const limitOrderBuilder = new LimitOrderBuilder(contractAddress, chainId, connector);
+    const swapContract: SwapAbi = yield new web3Provider.eth.Contract(contractAbi, contractAddress);
+    const response = yield call(baseApi.getLimitOrders, { address: myAddress });
+    if (!validateStatus(response.status)) return;
+    const limitOrders = response.data;
     const makerAssetContract = new web3Provider.eth.Contract(bep20Abi, formValues.makerAssetAddress);
     const makerAssetDecimals = yield call(makerAssetContract.methods.decimals().call);
-    const takerAssetContract = new web3Provider.eth.Contract(bep20Abi, formValues.takerAssetAddress);
+
+    const takerAssetContract = yield new web3Provider.eth.Contract(bep20Abi, formValues.takerAssetAddress);
     const takerAssetDecimals = yield call(takerAssetContract.methods.decimals().call);
-    const limitOrder = limitOrderBuilder.buildLimitOrder({
-      makerAddress: myAddress,
-      ...formValues,
-      takerAmount: toDecimals(formValues.takerAmount, takerAssetDecimals),
-      makerAmount: toDecimals(formValues.makerAmount, makerAssetDecimals),
-    });
-    const callData = limitOrderProtocolFacade.cancelLimitOrder(limitOrder);
-    yield web3Provider.eth.sendTransaction({
+
+    const makerAmount = toDecimals(formValues.makerAmount, makerAssetDecimals);
+    const takerAmount = toDecimals(formValues.takerAmount, takerAssetDecimals);
+    const currentOrder = limitOrders?.find(
+      (order) =>
+        makerAmount === order.data.makingAmount &&
+        takerAmount === order.data.takingAmount &&
+        web3Provider.utils.toChecksumAddress(formValues.makerAssetAddress) ===
+          web3Provider.utils.toChecksumAddress(order.data.makerAsset) &&
+        web3Provider.utils.toChecksumAddress(formValues.takerAssetAddress) ===
+          web3Provider.utils.toChecksumAddress(order.data.takerAsset) &&
+        order,
+    );
+    yield call(swapContract.methods.cancelOrder(currentOrder?.data).send, {
       from: myAddress,
-      to: contractAddress,
       gas: '88600',
       gasPrice: '30600000000',
-      data: callData,
     });
     yield put(apiActions.success(type));
   } catch (err) {
